@@ -1,16 +1,15 @@
-package com.example.algorithmvisualizer
+package com.example.algorithmvisualizer.screens.visualization
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.algorithmvisualizer.Events
 import com.example.algorithmvisualizer.algorithms.BubbleSort
 import com.example.algorithmvisualizer.algorithms.InsertionSort
 import com.example.algorithmvisualizer.algorithms.QuickSort
 import com.example.algorithmvisualizer.algorithms.SelectionSort
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.sign
 import kotlin.random.Random
 
 class AlgorithmViewModel(
@@ -74,7 +73,7 @@ class AlgorithmViewModel(
     }
 
     private fun nextStep() {
-        if (next < onSortingArray.size){
+        if (next < onSortingArray.size) {
             intArrayOf.value = onSortingArray[next].toTypedArray()
             next++
             previous++
@@ -82,7 +81,7 @@ class AlgorithmViewModel(
     }
 
     private fun previousStep() {
-        if (previous >= 0){
+        if (previous >= 0) {
             intArrayOf.value = onSortingArray[previous].toTypedArray()
             next--
             previous--
@@ -101,36 +100,59 @@ class AlgorithmViewModel(
 
     //Algorithms Functions
 
-    private fun insertionSort(intArrayOf: MutableState<Array<Int>>) {
-        viewModelScope.launch {
-            insertionSort.sort(intArrayOf.value.clone()) { modifiedArray ->
-                onSortingArray.add(modifiedArray.toMutableList())
+    fun selectedAlgorithm() {
+        val selectedAlgorithm = 1
+        when (selectedAlgorithm) {
+            1 -> {
+                viewModelScope.launch {
+                    insertionSort.sort(intArrayOf.value.clone()) { modifiedArray ->
+                        onSortingArray.add(modifiedArray.toMutableList())
+                    }
+                }
             }
+
+            2 -> {
+                viewModelScope.launch {
+                    bubbleSort.sort(intArrayOf.value.clone()) { modifiedArray ->
+                        onSortingArray.add(modifiedArray.toMutableList())
+                    }
+                }
+            }
+
+            3 -> {
+                viewModelScope.launch {
+                    quickSort.sort(intArrayOf.value.clone()) { modifiedArray ->
+                        onSortingArray.add(modifiedArray.toMutableList())
+                    }
+                }
+            }
+
+            4 -> {
+                viewModelScope.launch {
+                    selectionSort.sort(intArrayOf.value.clone()) { modifiedArray ->
+                        onSortingArray.add(modifiedArray.toMutableList())
+                    }
+                }
+            }
+            else -> {}
         }
+
+//        private fun insertionSort(intArrayOf: MutableState<Array<Int>>) {
+//
+//        }
+//
+//        private fun bubbleSort(intArrayOf: MutableState<Array<Int>>) {
+//
+//        }
+//
+//        private fun quickSort(intArrayOf: MutableState<Array<Int>>) {
+//
+//        }
+//
+//        private fun selectionSort(intArrayOf: MutableState<Array<Int>>) {
+//
+//        }
     }
 
-    private fun bubbleSort(intArrayOf: MutableState<Array<Int>>) {
-        viewModelScope.launch {
-            bubbleSort.sort(intArrayOf.value.clone()) { modifiedArray ->
-                onSortingArray.add(modifiedArray.toMutableList())
-            }
-        }
-    }
-
-    private fun quickSort(intArrayOf: MutableState<Array<Int>>) {
-        viewModelScope.launch {
-            quickSort.sort(intArrayOf.value.clone()) { modifiedArray ->
-                onSortingArray.add(modifiedArray.toMutableList())
-            }
-        }
-    }
-
-    private fun selectionSort(intArrayOf: MutableState<Array<Int>>) {
-        viewModelScope.launch {
-            selectionSort.sort(intArrayOf.value.clone()) { modifiedArray ->
-                onSortingArray.add(modifiedArray.toMutableList())
-            }
-        }
-    }
 
 }
