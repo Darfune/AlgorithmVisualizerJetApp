@@ -2,7 +2,8 @@ package com.example.algorithmvisualizer.algorithms
 
 class BubbleSort {
     suspend fun sort(
-        arr: IntArray
+        arr: Array<Int>,
+        onChange: (Array<Int>) -> Unit
     ) {
         val n = arr.size
         for (i in 0 until n) {
@@ -12,6 +13,7 @@ class BubbleSort {
                     val temp = arr[j]
                     arr[j] = arr[j + 1]
                     arr[j + 1] = temp
+                    onChange(arr)
                 }
             }
         }

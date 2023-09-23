@@ -2,7 +2,10 @@ package com.example.algorithmvisualizer.algorithms
 
 class SelectionSort {
 
-    suspend fun sort(arr: IntArray) {
+    suspend fun sort(
+        arr: Array<Int>,
+        onChange: (Array<Int>) -> Unit
+    ) {
         val n = arr.size
         for (i in 0 until n - 1) {
             var minIndex = i
@@ -14,6 +17,7 @@ class SelectionSort {
             val temp = arr[minIndex]
             arr[minIndex] = arr[i]
             arr[i] = temp
+            onChange(arr)
         }
     }
 }
