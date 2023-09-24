@@ -1,4 +1,4 @@
-package com.example.algorithmvisualizer.components
+package com.example.algorithmvisualizer.screens.visualization.components
 
 
 import androidx.compose.foundation.background
@@ -19,27 +19,31 @@ fun VisualizationSection(
     array: Array<Int>,
     screensMaxHeight: Dp
 ) {
-    BoxWithConstraints(modifier = modifier) {
+    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
         val itemWidth = remember {
-            maxWidth / array.size - 5.dp
+            maxWidth / array.size - 1.dp
         }
 
         Row(
             modifier = modifier,
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom
         ) {
             array.forEach {
-                Column(verticalArrangement = Arrangement.Center) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(
                         text = it.toString(),
                         color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 12.sp
+                        fontSize = 8.sp
                     )
                     Box(
                         modifier = Modifier
-                            .height(if (it.dp > screensMaxHeight) screensMaxHeight else it.dp * 7)
+                            .height(screensMaxHeight * it / 50 )
                             .width(itemWidth)
+                            .padding(horizontal = 2.dp)
                             .background(MaterialTheme.colorScheme.secondary)
                             .background(color = MaterialTheme.colorScheme.secondary)
                     ) {
