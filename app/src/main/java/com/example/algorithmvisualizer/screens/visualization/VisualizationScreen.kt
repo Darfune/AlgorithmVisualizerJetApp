@@ -13,12 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.algorithmvisualizer.Events
-import com.example.algorithmvisualizer.components.VisualizationSection
-import com.example.algorithmvisualizer.components.VisualizerBottomBar
+import com.example.algorithmvisualizer.screens.visualization.components.VisualizationSection
+import com.example.algorithmvisualizer.screens.visualization.components.VisualizerBottomBar
 
 @Composable
 fun VisualizationScreen(
+    navController: NavController,
+    algorithmId: Int,
     algorithmViewModel: AlgorithmViewModel
 ) {
     val configuration = LocalConfiguration.current
@@ -43,7 +46,7 @@ fun VisualizationScreen(
 
             val isPlaying = algorithmViewModel.isPlaying.value
             val isFinished = algorithmViewModel.onSortingFinished.value
-
+            algorithmViewModel.selectedAlgorithm(algorithmId)
             VisualizerBottomBar(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,7 +57,9 @@ fun VisualizationScreen(
                 speedDownClick = { algorithmViewModel.onEvent(Events.DecreaseSpeed) },
                 nextStepClick = { algorithmViewModel.onEvent(Events.NextStep) },
                 previousStepClick = { algorithmViewModel.onEvent(Events.PreviousStep) },
-                isPlaying = if (isFinished) !isPlaying else isPlaying,
+//                isPlaying = if (isFinished) !isPlaying else isPlaying,
+                isPlaying = isPlaying,
+                isFinished = isFinished
             )
         }
     }
