@@ -1,4 +1,4 @@
-package com.example.algorithmvisualizer.components
+package com.example.algorithmvisualizer.screens.visualization.components
 
 
 import android.content.res.Configuration
@@ -26,10 +26,19 @@ fun VisualizerBottomBar(
     speedDownClick: () -> Unit,
     nextStepClick: () -> Unit,
     previousStepClick: () -> Unit,
-    isPlaying: Boolean = false
+    isPlaying: Boolean,
+    isFinished: Boolean
 ) {
     BottomAppBar(modifier = modifier.background(MaterialTheme.colorScheme.surface)) {
-
+        ButtonRow(
+            startPauseClick,
+            speedUpClick,
+            speedDownClick,
+            nextStepClick,
+            previousStepClick,
+            isPlaying = isPlaying,
+            isFinished = isFinished
+        )
     }
 }
 
@@ -40,7 +49,8 @@ fun ButtonRow(
     speedDownClick: () -> Unit,
     nextStepClick: () -> Unit,
     previousStepClick: () -> Unit,
-    isPlaying: Boolean = false
+    isPlaying: Boolean,
+    isFinished: Boolean
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -63,7 +73,10 @@ fun ButtonRow(
         }
         IconButton(onClick = startPauseClick) {
             Icon(
-                painter = painterResource(id = if (!isPlaying) R.drawable.ic_play else R.drawable.ic_pause_24),
+                painter = painterResource(
+                    id = if (isFinished) R.drawable.ic_restart else
+                        if (!isPlaying) R.drawable.ic_play else R.drawable.ic_pause_24
+                ),
                 contentDescription = "Start or Pause",
                 tint = MaterialTheme.colorScheme.onSurface
             )
