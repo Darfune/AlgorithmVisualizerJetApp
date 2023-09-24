@@ -25,11 +25,11 @@ class AlgorithmViewModel(
     // Create a mutable array of 30 random numbers from 1 to 50
     val intArrayOf = mutableStateOf(Array<Int>(30) { numbers.nextInt(50) + 1 })
     val isPlaying = mutableStateOf(false)
-    var isPaused = mutableStateOf(false)
     var next = 1
     var previous = 0
     var sortingState = 0
     val onSortingFinished = mutableStateOf(false)
+    private var pause = false
     private var delay = 100L
     private var onSortingArray = mutableListOf<List<Int>>()
 
@@ -52,16 +52,18 @@ class AlgorithmViewModel(
         isPlaying.value = !isPlaying.value
     }
 
-    private fun play() = viewModelScope.launch {
 
+    private fun play() = viewModelScope.launch {
+        pause = false
         for (i in sortingState until onSortingArray.size) {
-            if (!isPaused.value) {
+            if (!pause) {
                 delay(delay)
                 intArrayOf.value = onSortingArray[i].toTypedArray()
             } else {
-                sortingState = 1
+                sortingState = i
                 next = i + 1
                 previous = i
+
                 return@launch
             }
         }
@@ -69,7 +71,7 @@ class AlgorithmViewModel(
     }
 
     private fun pause() {
-        isPaused.value = true
+        pause = true
     }
 
     private fun nextStep() {
@@ -100,9 +102,8 @@ class AlgorithmViewModel(
 
     //Algorithms Functions
 
-    fun selectedAlgorithm() {
-        val selectedAlgorithm = 1
-        when (selectedAlgorithm) {
+    fun selectedAlgorithm(id: Int) {
+        when (id) {
             1 -> {
                 viewModelScope.launch {
                     insertionSort.sort(intArrayOf.value.clone()) { modifiedArray ->
@@ -134,24 +135,9 @@ class AlgorithmViewModel(
                     }
                 }
             }
+
             else -> {}
         }
-
-//        private fun insertionSort(intArrayOf: MutableState<Array<Int>>) {
-//
-//        }
-//
-//        private fun bubbleSort(intArrayOf: MutableState<Array<Int>>) {
-//
-//        }
-//
-//        private fun quickSort(intArrayOf: MutableState<Array<Int>>) {
-//
-//        }
-//
-//        private fun selectionSort(intArrayOf: MutableState<Array<Int>>) {
-//
-//        }
     }
 
 
