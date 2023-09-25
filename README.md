@@ -1,5 +1,5 @@
 # Simple Algorithm Visualizer App
-This is a simple app that visualizes the sorting algorithms. The app was made using Kotlin and the Jetpack Compose FrameWork.
+This is a simple app that visualizes sorting algorithms. The app was made using Kotlin and the Jetpack Compose FrameWork.
 
 <img src="https://github.com/Darfune/AlgorithmVisualizerJetApp/assets/72785430/ba4df4ea-64d8-4842-bc3a-d2c0cdfa08a8" width="400">
 
